@@ -1,7 +1,6 @@
 import { promises as fs } from 'fs';
 import fetch from 'node-fetch';
-import { CDN_DEV_PLAYLIST_URL } from './utils.js'
-
+import { CDN_DEV_PLAYLIST_URL } from './constants.js'
 
 export {
     uploadPlaylistToCDN,
@@ -19,6 +18,8 @@ async function loadPlaylistFromCDN(){
     const res = await fetch(CDN_DEV_PLAYLIST_URL, {
         mode:'cors'
       })
-      return (await res.json()).data
+      
+      const {data = []} = await res.json()
+      return data
 }
 

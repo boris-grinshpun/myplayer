@@ -7,7 +7,6 @@ import {
   PLAYLIST_DIFF_EVENT,
   SUBSCTIPTION_URL,
   UPDATE_PLAYLIST_URL,
-  CDN_DEV_PLAYLIST_URL,
   USER_REGISTRATION_EVENT
 } from './utils/constants'
 import { updatePlaylistTitlesFromYoutube } from './utils/youtube'
@@ -36,7 +35,7 @@ function App() {
     }
   }, [])
 
-  // connect to server side events to get playlist updates
+  // subscribe to server side events to get playlist updates
   useEffect(() => {
     if (!connected) {
       try {
