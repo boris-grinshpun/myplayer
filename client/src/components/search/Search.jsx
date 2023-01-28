@@ -4,7 +4,8 @@ import './search.css'
 export default function Search({ onAddSong }) {
     const searchInput = useRef()
     const [error, setError] = useState(false)
-    function onSubmit() {
+
+    const onSubmit = () => {
 
         if (searchInput.current.value.match(/[a-zA-Z0-9-_]{11}/)) {
             onAddSong(searchInput.current.value)
@@ -15,13 +16,14 @@ export default function Search({ onAddSong }) {
         }
     }
 
-    function onEnter(event) {
+    const onChange = () => {
+        setError(false)
+    }
+
+    const onEnter = (event) => {
         if (event.key === 'Enter') {
             onSubmit()
         }
-    }
-    function onChange(){
-        setError(false)
     }
     return (
         <div className="search-wrapper">

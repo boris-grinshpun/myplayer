@@ -102,6 +102,9 @@ function App() {
       setPlaylist([...playlist.slice(1)])
     }
   }
+  const onSongErrorHandler = () => {
+    onSongEndHandler()
+  }
 
   const songId = playlist && playlist.length ? playlist[0].songId : null
 
@@ -114,7 +117,7 @@ function App() {
         </aside>
         <main>
         </main>
-        <Player songId={songId} onSongEnd={onSongEndHandler} />
+        <Player songId={songId} onSongEnd={onSongEndHandler} onSongError={onSongErrorHandler} />
       </div>
     </div>
   )

@@ -1,6 +1,6 @@
 import express, { json } from 'express';
 import cors from 'cors';
-import { uploadPlaylistToCDN, loadPlaylistFromCDN } from './cdn.js'
+import { uploadPlaylistToCDN, loadPlaylistFromCDN, emptyPlaylist } from './cdn.js'
 import { UPDATE_INTERVAL } from './constants.js'
 
 const port = 3000
@@ -11,6 +11,7 @@ app.set('trust proxy', true)
 
 let users = [];
 let cachedPlaylist = []
+let intervalId = null
 
 // Adding a new song to the playlist and updating the CDN
 // 
@@ -40,17 +41,17 @@ app.get('/sync/:timestamp', eventsHandler)
 function eventsHandler(request, response) {
 
   const { timestamp } = request.params
-  
+
   let clientIp = request.headers['x-forwarded-for'] || request.socket.remoteAddress
   clientIp = clientIp.replaceAll(":", "").replaceAll(".", "")
-  
+
   const newUserId = timestamp + clientIp
   const headers = {
     'Content-Type': 'text/event-stream',
     'Connection': 'keep-alive',
     'Cache-Control': 'no-cache'
   };
-  
+
   // sending unique user id to the client 
   response.writeHead(200, headers);
   const data = `event: register\ndata: ${JSON.stringify({ userId: newUserId })}\n\n`;
@@ -65,12 +66,20 @@ function eventsHandler(request, response) {
   if (!users.find(user => user.id === newUserId)) {
     users.push(newUser);
     console.log('Connected Users :', users.map(c => c.id))
-    
+
     // unsubscribe client
     request.on('close', () => {
       users = users.filter(user => user.id !== newUserId)
       console.log(`${newUserId} Connection closed`)
       console.log('Connected Users :', users.map(c => c.id))
+      if (users.length === 0) {
+        emptyPlaylist()
+        clearInterval(intervalId)
+        intervalId = null
+        cachedPlaylist = []
+      } else if (!intervalId) {
+        monitorPlaylistChanges()
+      }
     });
   }
 }
@@ -100,22 +109,23 @@ setTimeout(async () => {
 // Idealy this node should subscribe to a messeging service 
 // such as RabbitMQ to get notified about additions to the playlist
 // and in turn it will notify its clients about these changes
-setInterval(async () => {
+function monitorPlaylistChanges() {
+  intervalId = setInterval(async () => {
 
-  const newPlaylist = await loadPlaylistFromCDN()
+    const newPlaylist = await loadPlaylistFromCDN()
 
-  console.log('cachedPlaylist', cachedPlaylist)
-  console.log('newPlaylist', newPlaylist)
+    console.log('cachedPlaylist', cachedPlaylist)
+    console.log('newPlaylist', newPlaylist)
 
-  if (cachedPlaylist.length !== newPlaylist.length) {
-    const diff = newPlaylist.slice(cachedPlaylist.length)
-    
-    console.log('diff', diff)
-    notifySubscribedClients(diff)
-    cachedPlaylist = [...newPlaylist]
-  }
-}, UPDATE_INTERVAL)
+    if (cachedPlaylist.length !== newPlaylist.length) {
+      const diff = newPlaylist.slice(cachedPlaylist.length)
 
+      console.log('diff', diff)
+      notifySubscribedClients(diff)
+      cachedPlaylist = [...newPlaylist]
+    }
+  }, UPDATE_INTERVAL)
+}
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
