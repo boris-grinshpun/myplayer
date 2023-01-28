@@ -4,7 +4,6 @@ import { uploadPlaylistToCDN, loadPlaylistFromCDN } from './cdn.js'
 import { getDiff } from './utils.js'
 
 
-
 const port = 3000
 const app = express()
 app.use(cors())
@@ -12,7 +11,7 @@ app.use(json());
 app.set('trust proxy', true)
 
 let users = [];
-let cachedPlaylist
+let cachedPlaylist = []
 
 
 app.post('/add', async (request, response) => {
@@ -34,8 +33,6 @@ app.post('/add', async (request, response) => {
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
-
-
 
 app.get('/sync/:timestamp', eventsHandler)
 
@@ -83,6 +80,20 @@ function sendUpdatesToAll(diff) {
   })
 }
 
+setTimeout(async () => {
+  cachedPlaylist = await loadPlaylistFromCDN()
+  console.log('cachedPlaylist', cachedPlaylist)
+}, 0)
+
+// Idealy this node should subscribe to a messeging service 
+// such as RabbitMQ to get notified about additions to the playlist
+// and in turn it will notify its clients about these changes
+
+// For now we're mimicking the pub/sub service by
+// feching the playlist from the "CDN" every 18sec,
+// and checking if it has chanded. 
+// If it did, we're updating the subscribed clients to this node via sse
+
 setInterval(async () => {
 
   const newPlaylist = await loadPlaylistFromCDN()
@@ -98,10 +109,7 @@ setInterval(async () => {
   }
 }, 18000)
 
-setTimeout(async () => {
-  cachedPlaylist = await loadPlaylistFromCDN()
-  console.log('cachedPlaylist', cachedPlaylist)
-}, 0)
+
 
 
 
