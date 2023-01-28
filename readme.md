@@ -2,7 +2,7 @@
 
 1. CDN
 - cd cdn
-- npm instll
+- npm install
 - npm run cdn
 
 2. Server
