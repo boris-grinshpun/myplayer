@@ -54,7 +54,7 @@ function eventsHandler(request, response, next) {
   };
 
   response.writeHead(200, headers);
-  const data = `event: register\ndata: ${JSON.stringify({ newUserId })}\n\n`;
+  const data = `event: register\ndata: ${JSON.stringify({ userId: newUserId })}\n\n`;
   response.write(data)
 
   const newUser = {
