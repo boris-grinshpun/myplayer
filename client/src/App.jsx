@@ -9,7 +9,9 @@ import {
   UPDATE_PLAYLIST_URL,
   CDN_DEV_PLAYLIST_URL,
   USER_REGISTRATION_EVENT
-} from './core/constants'
+} from './utils/constants'
+import { updatePlaylistTitlesFromYoutube } from './utils/youtube'
+import { fetchPlaylistFromCDN } from './utils/api'
 
 
 function App() {
@@ -22,14 +24,11 @@ function App() {
   useEffect(() => {
     try {
       (async () => {
-        const res = await fetch(CDN_DEV_PLAYLIST_URL, {
-          mode: 'cors'
-        })
+        const cdnPlaylist = await fetchPlaylistFromCDN()
 
-        const list = await res.json()
-
-        if (list.data.length) {
-          setPlaylist([...list.data])
+        if (cdnPlaylist.length) {
+          const updatedList = await updatePlaylistTitlesFromYoutube(cdnPlaylist)
+          setPlaylist([...updatedList])
         }
       })()
     } catch (err) {
@@ -70,8 +69,12 @@ function App() {
         if (res === undefined) return true
         return false
       })
-      if (uniqueSongs && uniqueSongs.length)
-        setPlaylist([...playlist, ...uniqueSongs])
+      if (uniqueSongs && uniqueSongs.length) {
+        (async () => {
+          const updatedSongs = await updatePlaylistTitlesFromYoutube(uniqueSongs)
+          setPlaylist([...playlist, ...updatedSongs])
+        })()
+      }
     }
   }, [diff])
 
@@ -79,7 +82,8 @@ function App() {
   // 2. send a request to update the playlist on cdn
   const addSongHandler = async (songId) => {
     const id = userId + Date.now()
-    setPlaylist([...playlist, { userId, songId, id }])
+    const updatedSong = await updatePlaylistTitlesFromYoutube([{ userId, songId, id }])
+    setPlaylist([...playlist, ...updatedSong])
     try {
       const res = await fetch(UPDATE_PLAYLIST_URL, {
         headers: {
@@ -100,7 +104,7 @@ function App() {
     }
   }
 
-  const songId = playlist.length ? playlist[0].songId : null
+  const songId = playlist && playlist.length ? playlist[0].songId : null
 
   return (
     <div className="App">

@@ -1,5 +1,5 @@
 import YouTube from 'react-youtube';
-import {CLIENT_URL} from '../../core/constants'
+import {CLIENT_URL} from '../../utils/constants'
 import './player.css'
 
 export default function Player({ songId, onSongEnd }) {

@@ -1,0 +1,23 @@
+
+ul {
+    list-style-type: none;
+    gap: 5px;
+    width: 250px;
+    height: 340px;
+    margin : 0;
+    overflow-y: scroll;
+    padding: .0;
+    color: white;
+    background-color: rgb(21, 21, 21);
+  }
+  ul li{
+    padding: 1em .3em 0 .3em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    height: 2.8rem;
+    margin: .2em 0;
+    text-align:left;
+    background-color: rgb(56, 56, 56);
+    font-size: .85em;
+  }
