@@ -20,5 +20,5 @@
 - npm test
 - npm test:coverage
 
-![alt text](https://github.com/boris-grinshpun/myplayer/blob/main/screen.jpg?raw=true)
+![alt text](https://github.com/boris-grinshpun/myplayer/blob/main/screen.png?raw=true)
 
