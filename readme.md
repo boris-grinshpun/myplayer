@@ -2,7 +2,7 @@
 
 1. CDN
 - cd cdn
-- npm instll
+- npm install
 - npm run cdn
 
 2. Server
@@ -21,3 +21,4 @@
 - npm test:coverage
 
 [alt text](https://github.com/boris-grinshpun/myplayer/blob/main/screen.jpg?raw=true)
+
