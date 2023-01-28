@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "postinstall": "(cd server && npm install); (cd client && npm install); (cd cdn && npm install)"
+    "postinstall": "(cd server && npm install); (cd client && npm install); (cd cdn && npm install)",
   },
   "author": "",
   "license": "ISC"
