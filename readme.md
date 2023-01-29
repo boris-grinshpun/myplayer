@@ -19,7 +19,8 @@
 - cd client
 - npm test
 - npm test:coverage
-
+<br>
+---
 Note about scaleability :  
 The initial idea was to use a message queue, that would notify all nodes about the changes made to the playlist.  
 And then each node updates its subscribed users.  
