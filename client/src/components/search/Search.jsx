@@ -1,7 +1,7 @@
-import { useRef, useState } from "react"
+import { memo, useRef, useState } from "react"
 import './search.css'
 
-export default function Search({ onAddSong }) {
+const Search = ({ onAddSong }) => {
     const searchInput = useRef()
     const [error, setError] = useState(false)
 
@@ -35,3 +35,4 @@ export default function Search({ onAddSong }) {
         </div>
     )
 }
+export default memo(Search)
