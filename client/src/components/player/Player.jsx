@@ -26,7 +26,7 @@ export default function Player({ songId, onSongEnd, onSongError }) {
                         <YouTube videoId={songId} opts={playerOptions} onEnd={onSongEnd} onError={onSongError} onReady={onReady} />
                     </div>
                     :
-                    <div data-testid="thumbnail" className="video-thumbnail">Enter YouTube Song ID</div>}
+                    <div data-testid="thumbnail" className="video-thumbnail">enter YouTube song id</div>}
         </div>
     )
 }
