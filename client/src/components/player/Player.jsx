@@ -9,7 +9,7 @@ const Player = ({ song,  onSongEnd, onSongError }) => {
         height: '390',
         width: '640',
         playerVars: {
-            // controls: 0,
+            controls: 0,
             autoplay: 1,
             host: CLIENT_URL,
             // start: 6*60+20 // debugging 
@@ -28,13 +28,15 @@ const Player = ({ song,  onSongEnd, onSongError }) => {
     useEffect(()=>{
         if (song && song.songId)
             setId(song.songId)
+        else 
+            setId(null)
     },[song])
-    console.log(song)
+
     return (
         <div>
             {
                 id ?
-                    <div data-testid="video-player" data-id={song.id}>
+                    <div data-testid="video-player">
                         <YouTube videoId={id} opts={playerOptions} onEnd={onSongEnd} onError={onSongError} onReady={onReady} onStateChange={change} />
                     </div>
                     :
