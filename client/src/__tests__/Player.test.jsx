@@ -8,7 +8,7 @@ test("displays a default thumbnail when id is missing", async () => {
     );
   
     const playerThumbnail = await player.findByTestId("thumbnail");
-    expect(playerThumbnail.innerHTML).toContain("Enter YouTube Song ID");
+    expect(playerThumbnail.innerHTML).toContain("enter YouTube song id");
     player.unmount();
   });
 test("displays a player when ID is passed", async () => {
