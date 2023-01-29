@@ -66,20 +66,25 @@ function eventsHandler(request, response) {
   if (!users.find(user => user.id === newUserId)) {
     users.push(newUser);
     console.log('Connected Users :', users.map(c => c.id))
-
+    if (!intervalId && users.length > 1) {
+      console.log('started monitoring')
+      monitorPlaylistChanges()
+    }
     // unsubscribe client
     request.on('close', () => {
       users = users.filter(user => user.id !== newUserId)
       console.log(`${newUserId} Connection closed`)
       console.log('Connected Users :', users.map(c => c.id))
-      if (users.length === 0) {
-        emptyPlaylist()
+      if (users.length === 1) {
         clearInterval(intervalId)
         intervalId = null
+        console.log('stopped listening...')
+      } 
+      if (users.length === 0) {
+        emptyPlaylist()
         cachedPlaylist = []
-      } else if (!intervalId) {
-        monitorPlaylistChanges()
-      }
+        console.log('playlist cleared...')
+      } 
     });
   }
 }
