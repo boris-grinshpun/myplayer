@@ -13,7 +13,7 @@ test("displays a default thumbnail when id is missing", async () => {
   });
 test("displays a player when ID is passed", async () => {
     const player = render(
-        <Player songId={"PvF9PAxe5Ng"}/>
+        <Player song={{songId:"PvF9PAxe5Ng", id:1}}/>
     );
   
     const playerThumbnail = await player.findByTestId("video-player");
