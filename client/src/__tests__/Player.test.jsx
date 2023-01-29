@@ -11,7 +11,7 @@ test("displays a default thumbnail when id is missing", async () => {
     expect(playerThumbnail.innerHTML).toContain("enter YouTube song id");
     player.unmount();
   });
-test("displays a player when ID is passed", async () => {
+test("displays a player when song is passed", async () => {
     const player = render(
         <Player song={{songId:"PvF9PAxe5Ng", id:1}}/>
     );
