@@ -105,6 +105,11 @@ function App() {
   const onSongErrorHandler = () => {
     onSongEndHandler()
   }
+  const removeSongHandler = (index) => {
+    const newPlaylist = [...playlist]
+    newPlaylist.splice(index, 1)
+    setPlaylist(newPlaylist)
+  }
 
   const songId = playlist && playlist.length ? playlist[0].songId : null
 
@@ -112,12 +117,12 @@ function App() {
     <div className="App">
       <div className="container">
         <aside>
-          <Search className="search" onAddSong={addSongHandler} />
-          <Playlist list={playlist} />
+          <Search className="search" onAddSong={addSongHandler}/>
+          <Playlist list={playlist} onSongRemove={removeSongHandler}/>
         </aside>
         <main>
         </main>
-        <Player songId={songId} onSongEnd={onSongEndHandler} onSongError={onSongErrorHandler} />
+        <Player songId={songId} onSongEnd={onSongEndHandler} onSongError={onSongErrorHandler}/>
       </div>
     </div>
   )

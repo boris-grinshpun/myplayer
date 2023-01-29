@@ -1,27 +1,49 @@
-
 ul {
     list-style-type: none;
     gap: 5px;
     width: 250px;
-    margin : 0;
+    margin: 0;
     overflow-y: scroll;
     padding: .0;
     color: white;
     background-color: rgb(21, 21, 21);
     flex-grow: 1;
-  }
-  ul li{
+}
+
+ul li {
     padding: 1em .3em 0 .3em;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     height: 2.3rem;
     margin: .2em 0;
-    text-align:left;
+    text-align: left;
     background-color: rgb(56, 56, 56);
     font-size: .85em;
-  }
+    position: relative;
+}
 
-  ul li:hover{
+ul li:hover {
     background-color: rgb(80, 80, 80);
-  }
+}
+
+.remove-song {
+    position: absolute;
+    font-size: .8em;
+    right: .3em;
+    top: .2em;
+    width: 12px;
+    height: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(35, 35, 35);
+    border-radius: 50%;
+    cursor: pointer;
+    color: rgb(121, 121, 121);
+}
+
+.remove-song:hover {
+    background-color: red;
+    color: black;
+}
