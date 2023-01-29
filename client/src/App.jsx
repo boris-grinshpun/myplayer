@@ -123,6 +123,8 @@ function App() {
     }
     if (!playlist.length)
       setSong(null)
+    if (playlist.length && song && song.id !== playlist[0].id)
+      setSong({...playlist[0]})
   },[playlist])
 
   // const songId = playlist && playlist.length ? playlist[0].songId : null
