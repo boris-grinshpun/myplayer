@@ -108,9 +108,11 @@ function App() {
       setPlaylist([...playlist.slice(1)])
     }
   })
+
   const onSongErrorHandler = useCallback(() => {
     onSongEndHandler()
   })
+  
   const removeSongHandler = (index) => {
     const newPlaylist = [...playlist]
     newPlaylist.splice(index, 1)
@@ -118,11 +120,16 @@ function App() {
   }
 
   useEffect(()=>{
+    // set the first song
     if (playlist.length == 1 && song === null){
       setSong({...playlist[0]})
     }
+
+    // empty playlist
     if (!playlist.length)
       setSong(null)
+    
+    // handle playing song removal
     if (playlist.length && song && song.id !== playlist[0].id)
       setSong({...playlist[0]})
   },[playlist])
