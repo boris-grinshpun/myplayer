@@ -1,8 +1,9 @@
+import { memo } from 'react'
 import { YOUTUBE_VIDEO_BASEURL } from '../../utils/constants'
 
 import './playlist.css'
 
-export default function Playlist({ list, songClickHandler, onSongRemove }) {
+const Playlist = ({ list, songClickHandler, onSongRemove }) => {
     return (
         <ul data-testid="playlist">
             {list.map((song, index) => (
@@ -14,3 +15,4 @@ export default function Playlist({ list, songClickHandler, onSongRemove }) {
         </ul>
     )
 }
+export default memo(Playlist)

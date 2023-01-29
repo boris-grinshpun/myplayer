@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import './App.css'
 import Player from './components/player/Player'
 import Playlist from './components/playlist/Playlist'
@@ -18,6 +18,7 @@ function App() {
   const [diff, setDiff] = useState([])
   const [userId, setUserId] = useState("")
   const [connected, setConnected] = useState(false)
+  const [song, setSong] = useState(null)
 
   // fetch initial playlist from cdn, could be empty
   useEffect(() => {
@@ -97,21 +98,33 @@ function App() {
     }
   }
   // play next song handler
-  const onSongEndHandler = () => {
+  const onSongEndHandler = useCallback(() => {
+    if (playlist.length > 1){
+      setSong({...playlist[1]})
+    } else {
+      setSong(null)
+    }
     if (playlist.length) {
       setPlaylist([...playlist.slice(1)])
     }
-  }
-  const onSongErrorHandler = () => {
+  })
+  const onSongErrorHandler = useCallback(() => {
     onSongEndHandler()
-  }
+  })
   const removeSongHandler = (index) => {
     const newPlaylist = [...playlist]
     newPlaylist.splice(index, 1)
     setPlaylist(newPlaylist)
   }
 
-  const songId = playlist && playlist.length ? playlist[0].songId : null
+  useEffect(()=>{
+    if (playlist.length == 1 && song === null){
+      setSong({...playlist[0]})
+    }
+  },[playlist])
+
+  // const songId = playlist && playlist.length ? playlist[0].songId : null
+  // const id = playlist && playlist.length ? playlist[0].id : null
 
   return (
     <div className="App">
@@ -122,7 +135,7 @@ function App() {
         </aside>
         <main>
         </main>
-        <Player songId={songId} onSongEnd={onSongEndHandler} onSongError={onSongErrorHandler}/>
+        <Player song={song} onSongEnd={onSongEndHandler} onSongError={onSongErrorHandler}/>
       </div>
     </div>
   )
