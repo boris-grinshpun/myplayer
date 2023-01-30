@@ -21,6 +21,10 @@
 - npm test:coverage
 
 ---  
+### TODO  
+- seperate subscription, playlist and player logic from App.jsx by adding a reducer
+- move youtube api title feching to the server
+---
 #### Note about scaleability :  
 The initial idea was to use a message queue, that would notify all nodes about the changes made to the playlist.  
 And then each node updates its subscribed users.  
