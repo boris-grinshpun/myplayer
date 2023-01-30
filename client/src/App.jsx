@@ -19,9 +19,11 @@ function App() {
   const [userId, setUserId] = useState("")
   const [connected, setConnected] = useState(false)
   const [song, setSong] = useState(null)
+  const [playlistLoaded, setPlaylistLoaded] = useState(false)
 
   // fetch initial playlist from cdn, could be empty
   useEffect(() => {
+    playlistLoaded
     try {
       (async () => {
         const cdnPlaylist = await fetchPlaylistFromCDN()
@@ -29,6 +31,7 @@ function App() {
         if (cdnPlaylist.length) {
           const updatedList = await updatePlaylistTitlesFromYoutube(cdnPlaylist)
           setPlaylist([...updatedList])
+          setPlaylistLoaded(true)
         }
       })()
     } catch (err) {
@@ -38,7 +41,7 @@ function App() {
 
   // subscribe to server side events to get playlist updates
   useEffect(() => {
-    if (!connected) {
+    if (!connected && playlistLoaded) {
       try {
         const clientTimestamp = Date.now()
         const evtSource = new EventSource(`${SUBSCTIPTION_URL}/${clientTimestamp}`, {
@@ -59,7 +62,7 @@ function App() {
       }
       setConnected(true)
     }
-  }, [connected])
+  }, [connected, playlistLoaded])
 
   // update playlist when songs are added by other clients
   useEffect(() => {
