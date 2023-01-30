@@ -21,12 +21,13 @@
 - npm test:coverage
 
 ---  
-### TODO  
+### Todo
 - seperate subscription, playlist and player logic from App.jsx by adding a reducer
 - move youtube api title feching to the server
 ---
 ### Browser issues
 Only firefox autoplays when joining existing playlist
+---
 
 #### Note about scaleability :  
 The initial idea was to use a message queue, that would notify all nodes about the changes made to the playlist.  
