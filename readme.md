@@ -25,7 +25,8 @@
 - seperate subscription, playlist and player logic from App.jsx by adding a reducer
 - move youtube api title feching to the server
 ---
-### Browser issues
+### Browser issues  
+
 Only firefox autoplays when joining existing playlist
 ---
 
