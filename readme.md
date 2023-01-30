@@ -27,7 +27,7 @@
 ---
 ### Browser issues  
 
-Only firefox autoplays when joining existing playlist
+- Only firefox autoplays when joining existing playlist  
 ---
 
 #### Note about scaleability :  
