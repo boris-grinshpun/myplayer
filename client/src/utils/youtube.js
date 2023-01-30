@@ -15,7 +15,6 @@ function youtube(ids){
     return fetch(URL)
 }
 
-// --- 
 
 function attachTitles(playlist, youtubeSongsInfo) {
 
