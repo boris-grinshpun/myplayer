@@ -1,6 +1,9 @@
 import { UPDATE_INTERVAL } from './constants.js'
 import { loadPlaylistFromCDN } from './cdn.js'
-import { store } from './globalStore.js'
+import GlobalStore  from './GlobalStore.js'
+
+const store = GlobalStore.getInstance()
+console.log(store)
 // Mimicking a pub/sub service.
 // Feching the playlist from the "CDN" every 18sec,
 // and comparing it to the old one.

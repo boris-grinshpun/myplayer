@@ -1,7 +1,7 @@
 import express, { json } from 'express';
 import cors from 'cors';
 import { eventSyncHandler, addSongHandler } from './endPointHandlers.js'
-import { initPlaylist } from './utils/subscriptionService.js';
+import { initPlaylist } from './common/subscriptionService.js'
 
 
 const port = 3000

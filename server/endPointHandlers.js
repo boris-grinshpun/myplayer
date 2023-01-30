@@ -1,6 +1,8 @@
-import { monitorPlaylistChanges } from './utils/subscriptionService.js'
-import { uploadPlaylistToCDN, emptyPlaylist } from './utils/cdn.js'
-import { store } from './utils/globalStore.js'
+import { monitorPlaylistChanges } from './common/subscriptionService.js'
+import { uploadPlaylistToCDN, loadPlaylistFromCDN, emptyPlaylist } from './common/cdn.js'
+import GlobalStore from './common/GlobalStore.js'
+
+const store = GlobalStore.getInstance()
 
 export const eventSyncHandler = (request, response) => {
 
@@ -59,6 +61,7 @@ export const addSongHandler = async (request, response) => {
     try {
         const newPlaylist = await loadPlaylistFromCDN()
         newPlaylist.push({ songId, userId, id })
+        console.log({ songId, userId, id })
         await uploadPlaylistToCDN(newPlaylist)
         console.log('added...', songId, userId)
 
