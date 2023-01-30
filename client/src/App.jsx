@@ -46,20 +46,23 @@ function App() {
     }
 
     // empty playlist
-    if (!playlist.length)
+    else if (!playlist.length)
       setSong(null)
 
     // handle playing song removal
-    if (playlist.length && song && song.id !== playlist[0].id)
+    else if (playlist.length && song && song.id !== playlist[0].id)
       setSong({ ...playlist[0] })
+      else {
+        setSong({ ...playlist[0] })
+      }
 
   }, [playlist])
 
-  useEffect(()=>{
+  useEffect(() => {
     if (diff.length) {
       mergeDiffToPlaylist()
     }
-  },[diff])
+  }, [diff])
 
   // 1. update playlist when new song is added
   // 2. send a request to update the playlist on cdn
@@ -84,12 +87,13 @@ function App() {
   const onSongEndHandler = useCallback(() => {
     if (playlist.length > 1) {
       setSong({ ...playlist[1] })
+    }
+    else if (playlist.length) {
+      setPlaylist([...playlist.slice(1)])
     } else {
       setSong(null)
     }
-    if (playlist.length) {
-      setPlaylist([...playlist.slice(1)])
-    }
+
   })
 
   const onSongErrorHandler = useCallback(() => {
