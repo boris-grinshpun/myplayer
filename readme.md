@@ -27,7 +27,7 @@
 ---
 ### Browser issues  
 
-- Only firefox autoplays when joining existing playlist, must remove adbloker due to youtube ads
+- Only firefox autoplays when joining existing playlist, must remove adblocker due to youtube ads
 ---
 
 
