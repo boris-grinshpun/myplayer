@@ -27,16 +27,8 @@
 ---
 ### Browser issues  
 
-- Only firefox autoplays when joining existing playlist  
+- Only firefox autoplays when joining existing playlist, must remove adbloker due to youtube ads
 ---
 
-#### Note about scaleability :  
-The initial idea was to use a message queue, that would notify all nodes about the changes made to the playlist.  
-And then each node updates its subscribed users.  
-Instead there is a job running checking if the playlist was changed.  
-If it was changed, then each runnig node updates its subscribed users.  
-<br />
-Looks something like this.  
-<br />
-![alt text](https://github.com/boris-grinshpun/myplayer/blob/main/screen.png?raw=true)
+
 
